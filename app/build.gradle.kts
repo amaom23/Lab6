@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.example.lab6"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.lab6"
@@ -29,6 +29,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    buildFeatures{
+        viewBinding=true
+        dataBinding=true
+    }
 }
 
 dependencies {
@@ -37,6 +42,7 @@ dependencies {
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
+    implementation ("androidx.recyclerview:recyclerview:1.4.0-alpha01")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
