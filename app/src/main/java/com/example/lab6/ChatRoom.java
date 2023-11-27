@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,15 +46,16 @@ public class ChatRoom extends AppCompatActivity {
         binding.recycleView.setLayoutManager(new LinearLayoutManager(this));
 
         binding.sendButton.setOnClickListener(click -> {
+                    String typedMessage = binding.textInput.getText().toString();
+                    onSendButtonClick(typedMessage);
+
+                });
+
+        binding.receiveButton.setOnClickListener(receiveclick -> {
+            // Simulate receiving a message
             String typedMessage = binding.textInput.getText().toString();
-            onSendButtonClick(typedMessage);
-
-            binding.receiveButton.setOnClickListener(receiveclick -> {
-                // Simulate receiving a message
-                onReceiveButtonClick();
-            });
-
-    });
+            onReceiveButtonClick(typedMessage);
+        });
 
 
         myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
@@ -86,7 +88,7 @@ public class ChatRoom extends AppCompatActivity {
             @Override
             public int getItemViewType(int position) {
                 ChatMessage chatMessage = messages.get(position);
-                return chatMessage.isSend() ? 0 : 1;
+                return chatMessage.isSent() ? 0 : 1;
             }
 
         };
@@ -107,16 +109,19 @@ public class ChatRoom extends AppCompatActivity {
         binding.textInput.setText("");
     }
 
-    private void onReceiveButtonClick() {
+    private void onReceiveButtonClick(String typedMessage) {
         // Simulate receiving a message
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
         String currentDateandTime = sdf.format(new Date());
 
-        ChatMessage receivedMessage = new ChatMessage("This is a received message", currentDateandTime, false);
+        ChatMessage receivedMessage = new ChatMessage(typedMessage, currentDateandTime, false);
 
         messages.add(receivedMessage);
         myAdapter.notifyItemInserted(messages.size() - 1);
+        Log.d("ChatRoom", "Received message added: " + typedMessage);
     }
+
+
     static class MyRowHolder extends RecyclerView.ViewHolder {
         TextView messageText;
         TextView timeText;

@@ -21,7 +21,7 @@ public class ChatMessage {
         return timeSent;
     }
 
-    public boolean isSend() { return isSentButton; }
+    public boolean isSent() { return isSentButton; }
 
 }
 
